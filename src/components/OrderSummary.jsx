@@ -1,4 +1,4 @@
-// components/OrderSummary.jsx - Fixed with working WhatsApp
+// components/OrderSummary.jsx - Updated structure
 import React, { useState } from 'react';
 
 const OrderSummary = ({ orderDetails, onClose, cart, removeFromCart, updateQuantity, cartTotal }) => {
@@ -43,30 +43,32 @@ const OrderSummary = ({ orderDetails, onClose, cart, removeFromCart, updateQuant
     const encodedMessage = encodeURIComponent(orderText);
     window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
     
-    // Reset cart and close modal
     setTimeout(() => {
       onClose();
-      // You could clear the cart here if needed
     }, 1000);
   };
 
   return (
     <div className="order-summary-modal">
       <div className="order-summary-content">
-        <button onClick={onClose} className="close-modal">
-          <i className="fas fa-times"></i>
-        </button>
-        
-        <h2>Order Summary</h2>
-        <p className="order-subtitle">Review your order and provide delivery details</p>
+        <div className="order-summary-header">
+          <h2>Order Summary</h2>
+          <p className="order-subtitle">Review your order and provide delivery details</p>
+          <button onClick={onClose} className="close-modal">
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
         
         <div className="cart-items-section">
-          <h3>Your Order ({cart.length} items)</h3>
+          <h3>
+            <i className="fas fa-shopping-cart"></i>
+            Your Order ({cart.length} items)
+          </h3>
           <div className="cart-items-list">
             {cart.map(item => (
               <div key={item.cartId} className="cart-item">
                 <div className="cart-item-info">
-                  <span className="item-name">{item.name}</span>
+                  <div className="item-name">{item.name}</div>
                   <div className="item-quantity-controls">
                     <button 
                       onClick={() => updateQuantity(item.cartId, -1)}
@@ -84,7 +86,9 @@ const OrderSummary = ({ orderDetails, onClose, cart, removeFromCart, updateQuant
                   </div>
                 </div>
                 <div className="cart-item-price">
-                  <span>₦{(item.price * item.quantity).toLocaleString()}</span>
+                  <div className="item-price-amount">
+                    ₦{(item.price * item.quantity).toLocaleString()}
+                  </div>
                   <button 
                     onClick={() => removeFromCart(item.cartId)}
                     className="remove-item-btn"
@@ -103,21 +107,24 @@ const OrderSummary = ({ orderDetails, onClose, cart, removeFromCart, updateQuant
             <span>₦{cartTotal.toLocaleString()}</span>
           </div>
           <div className="total-row">
-            <span>Delivery</span>
+            <span>Delivery Fee</span>
             <span>To be discussed</span>
           </div>
           <div className="total-row grand-total">
             <span>Total Amount</span>
             <span>₦{cartTotal.toLocaleString()}</span>
           </div>
-          <p className="delivery-note">
+          <div className="delivery-note">
             <i className="fas fa-info-circle"></i>
-            {orderDetails.deliveryNote}
-          </p>
+            <span>Please deliver 48 hours after order confirmation</span>
+          </div>
         </div>
 
         <div className="customer-info-section">
-          <h3>Delivery Information</h3>
+          <h3>
+            <i className="fas fa-truck"></i>
+            Delivery Information
+          </h3>
           <div className="form-group">
             <label>Full Name *</label>
             <input

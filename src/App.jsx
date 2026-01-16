@@ -1,4 +1,4 @@
-// App.jsx - Updated with working cart and checkout
+// App.jsx - Complete with Improved Footer
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AdminPortal from './components/AdminPortal';
@@ -76,7 +76,7 @@ const App = () => {
       if (item.cartId === cartId) {
         const newQuantity = item.quantity + delta;
         if (newQuantity < 1) {
-          return null; // Will be filtered out
+          return null;
         }
         return { ...item, quantity: newQuantity };
       }
@@ -135,7 +135,6 @@ const App = () => {
     setActiveCategory(category);
   };
 
-  // Function to open cart
   const openCart = () => {
     if (cart.length > 0) {
       prepareOrder();
@@ -196,7 +195,11 @@ const App = () => {
               </nav>
 
               <div className="header-actions">
-                <div className="cart" onClick={openCart} style={{ cursor: cart.length > 0 ? 'pointer' : 'default' }}>
+                <div 
+                  className="cart" 
+                  onClick={openCart} 
+                  style={{ cursor: cart.length > 0 ? 'pointer' : 'default' }}
+                >
                   <div className="cart-icon">
                     <i className="fas fa-shopping-basket"></i>
                     {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
@@ -258,7 +261,7 @@ const App = () => {
         )}
       </main>
 
-      {/* Fixed Order Button - NOW WORKING */}
+      {/* Floating Checkout Button */}
       {cart.length > 0 && !isAdmin && (
         <div className="floating-cart">
           <button className="checkout-btn" onClick={prepareOrder}>
@@ -291,7 +294,7 @@ const App = () => {
       {/* WhatsApp Integration */}
       {!isAdmin && <WhatsAppIntegration cart={cart} cartTotal={cartTotal} />}
 
-      {/* Footer */}
+      {/* Improved Footer - No Social Media */}
       {!isAdmin && (
         <footer className="footer">
           <div className="footer-container">
@@ -310,34 +313,30 @@ const App = () => {
               <p className="footer-description">
                 Premium health and wellness products crafted for your best life.
               </p>
-              <div className="social-icons">
-                <a href="#" className="social-icon"><i className="fab fa-instagram"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-facebook"></i></a>
-                <a href="#" className="social-icon"><i className="fab fa-twitter"></i></a>
-              </div>
             </div>
 
             <div className="footer-section">
-              <h4>Quick Links</h4>
-              <a href="#" onClick={() => handleCategoryChange('all')}>All Products</a>
-              <a href="#" onClick={() => handleCategoryChange('popular')}>Popular Items</a>
-              <a href="#" onClick={() => handleCategoryChange('packs')}>Health Packs</a>
-              <a href="#" onClick={() => setShowLogin(true)}>Owner Login</a>
-            </div>
-
-            <div className="footer-section">
-              <h4>Contact Info</h4>
-              <div className="contact-item">
+              <h4>Contact Directly</h4>
+              <div className="contact-direct-item">
                 <i className="fas fa-phone"></i>
-                <span>+234 816 713 7498</span>
+                <div className="contact-details">
+                  <a href="tel:+2348167137498" className="contact-link">+234 816 713 7498</a>
+                  <p className="contact-subtext">Call or WhatsApp</p>
+                </div>
               </div>
-              <div className="contact-item">
+              <div className="contact-direct-item">
                 <i className="fas fa-envelope"></i>
-                <span>augustineblessingibeh@gmail.com</span>
+                <div className="contact-details">
+                  <a href="mailto:augustineblessingibeh@gmail.com" className="contact-link">augustineblessingibeh@gmail.com</a>
+                  <p className="contact-subtext">Email for inquiries</p>
+                </div>
               </div>
-              <div className="contact-item">
-                <i className="fas fa-map-marker-alt"></i>
-                <span>Order 48hrs before delivery</span>
+              <div className="contact-direct-item">
+                <i className="fas fa-clock"></i>
+                <div className="contact-details">
+                  <span className="contact-text">48-hour notice</span>
+                  <p className="contact-subtext">Required for all orders</p>
+                </div>
               </div>
             </div>
 
@@ -356,11 +355,36 @@ const App = () => {
                 <span>10:00 AM - 4:00 PM</span>
               </div>
             </div>
+
+            <div className="footer-section">
+              <h4>Quick Actions</h4>
+              <button 
+                className="footer-action-btn whatsapp-action"
+                onClick={() => window.open('https://wa.me/2348167137498', '_blank')}
+              >
+                <i className="fab fa-whatsapp"></i>
+                WhatsApp Now
+              </button>
+              <button 
+                className="footer-action-btn call-action"
+                onClick={() => window.location.href = 'tel:+2348167137498'}
+              >
+                <i className="fas fa-phone"></i>
+                Call Now
+              </button>
+              <button 
+                className="footer-action-btn email-action"
+                onClick={() => window.location.href = 'mailto:augustineblessingibeh@gmail.com'}
+              >
+                <i className="fas fa-envelope"></i>
+                Send Email
+              </button>
+            </div>
           </div>
           
           <div className="footer-bottom">
             <p>&copy; {new Date().getFullYear()} Strong Delight. All rights reserved.</p>
-            <p className="footer-note">Crafted with <i className="fas fa-heart"></i> for good health</p>
+            <p className="footer-note">Premium health products for your wellbeing</p>
           </div>
         </footer>
       )}

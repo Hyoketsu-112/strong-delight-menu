@@ -1,4 +1,4 @@
-// App.jsx - COMPLETE FIXED VERSION
+// App.jsx - Updated with working cart and checkout
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AdminPortal from './components/AdminPortal';
@@ -49,6 +49,7 @@ const App = () => {
   const [orderDetails, setOrderDetails] = useState({});
   const [activeCategory, setActiveCategory] = useState('all');
 
+  // Save menu to localStorage
   useEffect(() => {
     localStorage.setItem('strongDelightMenu', JSON.stringify(menuItems));
   }, [menuItems]);
@@ -71,17 +72,18 @@ const App = () => {
   };
 
   const updateQuantity = (cartId, delta) => {
-    setCart(cart.map(item => {
+    const newCart = cart.map(item => {
       if (item.cartId === cartId) {
         const newQuantity = item.quantity + delta;
         if (newQuantity < 1) {
-          removeFromCart(cartId);
-          return null;
+          return null; // Will be filtered out
         }
         return { ...item, quantity: newQuantity };
       }
       return item;
-    }).filter(Boolean));
+    }).filter(Boolean);
+    
+    setCart(newCart);
   };
 
   const updateItemPrice = (category, id, newPrice) => {
@@ -131,6 +133,13 @@ const App = () => {
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
+  };
+
+  // Function to open cart
+  const openCart = () => {
+    if (cart.length > 0) {
+      prepareOrder();
+    }
   };
 
   return (
@@ -187,7 +196,7 @@ const App = () => {
               </nav>
 
               <div className="header-actions">
-                <div className="cart" onClick={() => cart.length > 0 && setShowOrderSummary(true)}>
+                <div className="cart" onClick={openCart} style={{ cursor: cart.length > 0 ? 'pointer' : 'default' }}>
                   <div className="cart-icon">
                     <i className="fas fa-shopping-basket"></i>
                     {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
@@ -249,6 +258,7 @@ const App = () => {
         )}
       </main>
 
+      {/* Fixed Order Button - NOW WORKING */}
       {cart.length > 0 && !isAdmin && (
         <div className="floating-cart">
           <button className="checkout-btn" onClick={prepareOrder}>
@@ -259,6 +269,7 @@ const App = () => {
         </div>
       )}
 
+      {/* Modals */}
       {showLogin && (
         <LoginModal 
           onLogin={handleAdminLogin}
@@ -277,8 +288,10 @@ const App = () => {
         />
       )}
 
-      {!isAdmin && <WhatsAppIntegration />}
+      {/* WhatsApp Integration */}
+      {!isAdmin && <WhatsAppIntegration cart={cart} cartTotal={cartTotal} />}
 
+      {/* Footer */}
       {!isAdmin && (
         <footer className="footer">
           <div className="footer-container">

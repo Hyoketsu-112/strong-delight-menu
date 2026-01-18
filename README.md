@@ -1,6 +1,6 @@
 # Strong Delight - Menu & Order System
 
-![Strong Delight Logo](https://via.placeholder.com/100/00A86B/FFFFFF?text=SD)
+![Strong Delight Logo](/public/logo.png)
 
 A professional React-based menu system for Strong Delight, a health and wellness business. Customers can browse products, manage orders, and submit via WhatsApp. Business owners have a secure admin portal for menu management.
 

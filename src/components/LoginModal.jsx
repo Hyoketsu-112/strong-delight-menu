@@ -20,7 +20,7 @@ const LoginModal = ({ onLogin, onClose }) => {
     <div className="modal-overlay">
       <div className="login-modal">
         <div className="modal-header">
-          <h2>Owner Access</h2>
+          <h2><i className="fas fa-user-shield"></i> Owner Access</h2>
           <button onClick={onClose} className="close-modal">
             <i className="fas fa-times"></i>
           </button>
@@ -58,13 +58,14 @@ const LoginModal = ({ onLogin, onClose }) => {
             )}
             
             <button type="submit" className="login-btn">
+              <i className="fas fa-sign-in-alt"></i>
               Access Admin Portal
             </button>
           </form>
           
           <div className="login-note">
             <i className="fas fa-info-circle"></i>
-            <p>This area is restricted to authorized personnel only.</p>
+            <p>This area is restricted to authorized personnel only. Please ensure you have proper authorization before proceeding.</p>
           </div>
         </div>
       </div>

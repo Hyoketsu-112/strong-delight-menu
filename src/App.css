@@ -79,38 +79,32 @@ body {
   gap: 1rem;
 }
 
-.logo-circle {
+/* ===== Enhanced Logo Image Styles ===== */
+.logo-image {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   box-shadow: 0 4px 20px rgba(0, 168, 107, 0.3);
   transition: var(--transition);
+  overflow: hidden;
+  border: 3px solid var(--white);
 }
 
-.logo-circle:hover {
-  transform: scale(1.05) rotate(5deg);
-}
-
-.logo-circle.small {
-  width: 60px;
-  height: 60px;
-}
-
-.logo-glow {
+.logo-image::before {
+  content: '';
   position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   border-radius: 50%;
-  filter: blur(10px);
-  opacity: 0.6;
+  z-index: -1;
   animation: glow 2s ease-in-out infinite alternate;
 }
 
@@ -119,17 +113,52 @@ body {
   to { opacity: 0.7; transform: scale(1.02); }
 }
 
-.logo-text {
-  position: relative;
-  z-index: 2;
+.logo-image.small {
+  width: 60px;
+  height: 60px;
+  border-width: 2px;
 }
 
-.logo-main {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
-  font-weight: 900;
+.logo-image.small::before {
+  display: none;
+}
+
+/* ZOOMED IN LOGO - Changed from 85% to 95% */
+.logo-img {
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+  border-radius: 50%;
+  transition: var(--transition);
+  transform: scale(1.1); /* Added zoom effect */
+}
+
+.logo-image:hover .logo-img {
+  transform: scale(1.15) rotate(5deg);
+}
+
+/* Logo Placeholder for when image fails to load */
+.logo-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--white);
-  letter-spacing: 1px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.logo-placeholder.small {
+  font-size: 1.5rem;
+}
+
+.placeholder-text {
+  position: relative;
+  z-index: 2;
 }
 
 .brand {
@@ -964,9 +993,10 @@ body {
   border-color: var(--primary);
 }
 
+/* ===== FIXED Popular Badge Position - MOVED TO BOTTOM RIGHT ===== */
 .popular-badge {
   position: absolute;
-  top: 1rem;
+  bottom: 1rem;
   right: 1rem;
   background: linear-gradient(135deg, #FFC107, #FF9800);
   color: var(--white);
@@ -976,7 +1006,9 @@ body {
   font-weight: 700;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
-  z-index: 1;
+  z-index: 2;
+  max-width: 80px;
+  text-align: center;
 }
 
 .card-header {
@@ -984,6 +1016,8 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .card-header h3 {
@@ -992,20 +1026,23 @@ body {
   color: var(--black);
   flex: 1;
   line-height: 1.3;
+  margin-right: 1rem;
 }
 
 .price {
   font-size: 1.6rem;
   font-weight: 800;
   color: var(--primary);
-  margin-left: 1rem;
+  margin-left: auto;
+  min-width: 120px;
+  text-align: right;
 }
 
 .description {
   color: var(--gray);
   font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem; /* Increased to accommodate badge */
   min-height: 70px;
 }
 
@@ -1463,6 +1500,209 @@ textarea:focus {
   box-shadow: 0 6px 16px rgba(0, 168, 107, 0.3);
 }
 
+/* ===== ADMIN LOGIN MODAL STYLING ===== */
+.login-modal {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.login-modal .modal-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: var(--white);
+  padding: 2rem;
+  text-align: center;
+  border-bottom: none;
+}
+
+.login-modal .modal-header h2 {
+  color: var(--white);
+  font-size: 1.8rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.login-modal .close-modal {
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--white);
+  width: 40px;
+  height: 40px;
+  transition: var(--transition);
+}
+
+.login-modal .close-modal:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.login-icon {
+  text-align: center;
+  margin: 2rem 0 1.5rem;
+}
+
+.login-icon i {
+  font-size: 4rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 1rem;
+  border-radius: 50%;
+  background-color: rgba(0, 168, 107, 0.1);
+}
+
+.login-description {
+  text-align: center;
+  color: var(--gray);
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.login-form {
+  padding: 0 2rem 2rem;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.95rem;
+}
+
+.input-group label i {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--light-gray);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: var(--transition);
+  background: var(--light);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(0, 168, 107, 0.1);
+}
+
+.error-message {
+  background: linear-gradient(135deg, #ff7e5f, #ff5252);
+  color: var(--white);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+.error-message i {
+  font-size: 1.2rem;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 1.1rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 168, 107, 0.3);
+}
+
+.login-btn:hover::before {
+  opacity: 0.2;
+}
+
+.login-btn i,
+.login-btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.login-note {
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.05), rgba(0, 168, 107, 0.05));
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  border: 1px solid rgba(0, 168, 107, 0.1);
+}
+
+.login-note i {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.login-note p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
 /* ===== Modal Styles ===== */
 .modal-overlay {
   position: fixed;
@@ -1568,13 +1808,14 @@ textarea:focus {
     padding: 0 1rem;
   }
   
-  .logo-circle {
+  .logo-image {
     width: 60px;
     height: 60px;
   }
   
-  .logo-main {
-    font-size: 1.5rem;
+  .logo-image.small {
+    width: 50px;
+    height: 50px;
   }
   
   .brand-name {
@@ -1640,16 +1881,55 @@ textarea:focus {
     height: 56px;
     font-size: 1.7rem;
   }
+  
+  /* Responsive adjustments for popular badge */
+  .popular-badge {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  .price {
+    font-size: 1.4rem;
+    min-width: 100px;
+  }
+  
+  .card-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .description {
+    margin-bottom: 2.25rem;
+  }
+  
+  /* Admin login modal mobile */
+  .login-modal {
+    max-width: 90%;
+  }
+  
+  .login-icon i {
+    font-size: 3rem;
+  }
+  
+  .login-modal .modal-header {
+    padding: 1.5rem;
+  }
+  
+  .login-form {
+    padding: 0 1.5rem 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .logo-circle {
+  .logo-image {
     width: 50px;
     height: 50px;
   }
   
-  .logo-main {
-    font-size: 1.2rem;
+  .logo-image.small {
+    width: 40px;
+    height: 40px;
   }
   
   .brand-name {
@@ -1701,6 +1981,42 @@ textarea:focus {
   
   .stat-box {
     min-width: auto;
+  }
+  
+  /* Mobile adjustments for popular badge */
+  .popular-badge {
+    bottom: 0.5rem;
+    right: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.65rem;
+  }
+  
+  .price {
+    font-size: 1.3rem;
+    min-width: 90px;
+  }
+  
+  .card-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .description {
+    margin-bottom: 2rem;
+  }
+  
+  /* Admin login modal small screens */
+  .login-modal .modal-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .login-description {
+    padding: 0 1rem;
+    font-size: 0.95rem;
+  }
+  
+  .login-btn {
+    padding: 1rem;
+    font-size: 1rem;
   }
 }
 

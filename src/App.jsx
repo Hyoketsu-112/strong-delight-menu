@@ -1,4 +1,4 @@
-// App.jsx - Complete with Improved Footer
+// App.jsx - Complete with All Fixes
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import AdminPortal from './components/AdminPortal';
@@ -147,11 +147,22 @@ const App = () => {
       <header className="header">
         <div className="header-container">
           <div className="logo-section">
-            <div className="logo-circle">
-              <div className="logo-text">
-                <span className="logo-main">SD</span>
-              </div>
-              <div className="logo-glow"></div>
+            <div className="logo-image">
+              {/* Replace '/logo.png' with your actual logo path */}
+              <img 
+                src="/logo.png" 
+                alt="Strong Delight Logo" 
+                className="logo-img"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.style.display = 'none';
+                  e.target.parentElement.innerHTML = `
+                    <div class="logo-placeholder">
+                      <div class="placeholder-text">SD</div>
+                    </div>
+                  `;
+                }}
+              />
             </div>
             <div className="brand">
               <h1 className="brand-name">STRONG DELIGHT</h1>
@@ -300,10 +311,22 @@ const App = () => {
           <div className="footer-container">
             <div className="footer-section">
               <div className="footer-logo">
-                <div className="logo-circle small">
-                  <div className="logo-text">
-                    <span className="logo-main">SD</span>
-                  </div>
+                <div className="logo-image small">
+                  {/* Replace '/logo.png' with your actual logo path */}
+                  <img 
+                    src="/logo.png" 
+                    alt="Strong Delight Logo" 
+                    className="logo-img"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = `
+                        <div class="logo-placeholder small">
+                          <div class="placeholder-text">SD</div>
+                        </div>
+                      `;
+                    }}
+                  />
                 </div>
                 <div className="footer-brand">
                   <h3>STRONG DELIGHT</h3>
